@@ -1,0 +1,7 @@
+{
+  "name": "mdc-v2",
+  "short_name": "mdc-v2",
+  "description": "nueva versión de medical cloud",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -108,10 +108,6 @@ class MdcV2App extends PolymerElement {
     };
   }
   _pageChanged(page) {
-    // Import the page component on demand.
-    //
-    // Note: `polymer build` doesn't like string concatenation in the import
-    // statement, so break it up.
     switch (page) {
       case 'doctor':
         import('./doctor.js');
@@ -125,10 +121,6 @@ class MdcV2App extends PolymerElement {
     }
   }
   _routePageChanged(page) {
-    // Show the corresponding page according to the route.
-    //
-    // If no page was found in the route data, page will be an empty string.
-    // Show 'view1' in that case. And if the page doesn't exist, show 'view404'.
    if (!page) {
      this.page = 'hce';
    } else if (['hce', 'paciente', 'doctor'].indexOf(page) !== -1) {

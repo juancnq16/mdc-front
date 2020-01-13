@@ -2,16 +2,20 @@
   "name": "mdc-v2",
   "description": "nueva versión de medical cloud",
   "dependencies": {
+    "@babel/helper-plugin-utils": "^7.8.0",
+    "@babel/plugin-syntax-import-meta": "^7.8.0",
     "@polymer/app-layout": "^3.1.0",
     "@polymer/app-route": "^3.0.2",
     "@polymer/iron-autogrow-textarea": "^3.0.1",
     "@polymer/iron-collapse": "^3.0.1",
+    "@polymer/iron-image": "^3.0.2",
     "@polymer/iron-pages": "^3.0.1",
     "@polymer/iron-selector": "^3.0.1",
     "@polymer/paper-card": "^3.0.1",
     "@polymer/paper-icon-button": "^3.0.2",
     "@polymer/paper-tabs": "^3.1.0",
-    "@polymer/polymer": "^3.0.0"
+    "@polymer/polymer": "^3.0.0",
+    "npm": "^6.13.6"
   },
   "devDependencies": {
     "@polymer/test-fixture": "^4.0.2",

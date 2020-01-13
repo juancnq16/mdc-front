@@ -1,5 +1,6 @@
 import {html, PolymerElement} from '@polymer/polymer/polymer-element.js';
 import './texto-hce.js'
+import './paciente-hce.js'
 import '@polymer/paper-card/paper-card.js';
 import '@polymer/paper-tabs/paper-tabs.js';
 import '@polymer/paper-tabs/paper-tab.js';
@@ -23,11 +24,11 @@ class Hce extends PolymerElement {
 		paper-tabs {
 			background-color: #496EB4;
 			color: white;
-			font-size: 15px;
+			font-size: 1.8vw;
 		}
 	</style>
 	<h1>Hola Mundo </h1>
-	<button on-click="saluda">asdf</button>
+	<paciente-hce></paciente-hce>
     <div id="paciente-content">
     </div>
   <div class = "div" id="hce-content">
@@ -79,7 +80,7 @@ class Hce extends PolymerElement {
 	  
 	  selected: {
 		type: Number,
-		value: 1
+		value: 0
 	  }
     };
   }

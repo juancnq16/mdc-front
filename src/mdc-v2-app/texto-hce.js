@@ -11,7 +11,9 @@ class TextoHce extends PolymerElement {
     return html`
         <style>
 			paper-card {
-				background-color: #e6e6e6;
+        background-color: #e6e6e6;
+        font-size: 1.5vw;
+        width: 100%;
 			}
         </style>
             <paper-card>

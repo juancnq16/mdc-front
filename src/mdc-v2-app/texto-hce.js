@@ -10,16 +10,16 @@ class TextoHce extends PolymerElement {
   static get template() {
     return html`
         <style>
-			paper-card {
-        background-color: #e6e6e6;
-        font-size: 1.5vw;
-        width: 100%;
-			}
+          paper-card {
+            background-color: #e6e6e6;
+            font-size: 18px;
+            width: 100%;
+          }
         </style>
             <paper-card>
-				<div class="card-content">	
-					<iron-autogrow-textarea rows="4" placeholder="[[prop1]]" id="texto"></iron-autogrow-textarea>
-				</div>
+              <div class="card-content">	
+                <iron-autogrow-textarea rows="4" placeholder="[[prop1]]" id="texto"></iron-autogrow-textarea>
+              </div>
             </paper-card>
     `;
   }

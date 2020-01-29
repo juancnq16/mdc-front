@@ -22,10 +22,10 @@ class MdcV2App extends PolymerElement {
     return html`
         <style>
         :host {
-          --app-primary-color: #4285f4;
-          --app-secondary-color: black;
-
+          --app-primary-color: #496EB4;
+          --app-secondary-color: #000000;
           display: block;
+          background-color: #000000;
         }
 
         app-drawer-layout:not([narrow]) [drawer-toggle] {
@@ -42,21 +42,32 @@ class MdcV2App extends PolymerElement {
         }
 
         .drawer-list {
-          margin: 0 20px;
+		  margin: 0 20px;
+		  
+			background-color: #000000;
         }
-
+        app-drawer {
+			--app-drawer-scrim-background: rgba(0, 0, 100, 0.8);
+			
+		}
         .drawer-list a {
           display: block;
           padding: 0 16px;
           text-decoration: none;
-          color: var(--app-secondary-color);
+          font-size: 20px;
+          color: white;
+          backgound-color: #000000;
           line-height: 40px;
         }
 
         .drawer-list a.iron-selected {
-          color: black;
+          color: white;
           font-weight: bold;
-        }
+		}
+		.barra{
+			background-color: #000000;
+			display: block;
+		}
       </style>
       <app-location route="{{route}}" url-space-regex="^[[rootPath]]">
       </app-location>
@@ -64,13 +75,15 @@ class MdcV2App extends PolymerElement {
       <app-route route="{{route}}" pattern="[[rootPath]]:page" data="{{routeData}}" tail="{{subroute}}">
       </app-route>
       <app-drawer-layout fullbleed="" narrow="{{narrow}}">
-        <app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
-          <app-toolbar>Menu</app-toolbar>
+		<app-drawer id="drawer" slot="drawer" swipe-open="[[narrow]]">
+		<div class="barra">
+          <app-toolbar style="color:white;">Menu</app-toolbar>
           <iron-selector selected="[[page]]" attr-for-selected="name" class="drawer-list" role="navigation">
             <a name="hce" href="[[rootPath]]hce">hce</a>
             <a name="paciente" href="[[rootPath]]paciente">paciente</a>
             <a name="doctor" href="[[rootPath]]doctor">doctor</a>
-          </iron-selector>
+		  </iron-selector>
+		</div>
         </app-drawer>
 
         <!-- Main content -->
@@ -96,7 +109,7 @@ class MdcV2App extends PolymerElement {
     return {
       prop1: {
         type: String,
-        value: 'mdc-v2-app'
+        value: 'MedicalCloud'
       },
       page: {
         type: String,

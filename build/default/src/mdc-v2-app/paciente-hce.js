@@ -20,7 +20,6 @@ class PacienteHce extends PolymerElement {
 			paper-card {
 				width: 100%;
 				font-size: 20px;
-				width: 100%;
 				text-align: center;
 			}
 			p {

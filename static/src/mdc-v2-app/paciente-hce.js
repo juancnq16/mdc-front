@@ -20,7 +20,6 @@ class PacienteHce extends PolymerElement {
 			paper-card {
 				width: 100%;
 				font-size: 20px;
-				width: 100%;
 				text-align: center;
 			}
 			p {
@@ -120,11 +119,9 @@ class PacienteHce extends PolymerElement {
       },
       nombre: {
         type: String,
-        value: 'Juan'
       },
       fechaNacimiento: {
         type: Date,
-        value: '16-12-1999'
       },
       lugarNacimiento: {
         type: String
@@ -158,7 +155,26 @@ class PacienteHce extends PolymerElement {
       }
     };
   }
-
+  fillPaciente(datos){
+    this.nombre = datos['nombre']+" "+datos['apellido'];
+    this.documento_tipo = datos['tipoDocumento'];
+    this.lugarNacimiento = datos['lugarNacimiento'];
+    this.usuario_tipo = datos['tipoUsuario'];
+    this.sexo = datos['sexo'];
+    this.documento_numero = datos['numeroDoc'];
+    this.fechaNacimiento = datos['nacimiento'];
+    //this.$.rh.value = datos['RH'];
+    //this.$.pais_nacimiento.setValue(datos['lugarNacimiento']);
+    this.telefono = datos['telefono'];
+    //this.$.correo.value = datos['email'];
+    //this.$.estado_civil.selected = datos['estadoCivil'];
+    //this.$.zona_residencia.value = datos['zona_residencia'];
+    this.ciudad = datos['ciudad'];
+    this.direccion= datos['direccion'];
+    this.entidad = datos['entidadSeguridad'];
+    //this.$.plan_beneficios.value = datos['plan_beneficios'];
+    //this.$.tipo_sangre.value = datos['grupoSanquineo'];
+  }
 }
 
 window.customElements.define('paciente-hce', PacienteHce);

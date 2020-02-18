@@ -13,7 +13,7 @@ import "../../node_modules/@polymer/paper-tabs/paper-tab.js";
 class Hce extends PolymerElement {
   static get template() {
     return html`
-    <style>
+	<style>
 		.collapse-content {
 			padding: 15px;
 			border: 3px solid #dedede;
@@ -27,6 +27,20 @@ class Hce extends PolymerElement {
 			background-color: #496EB4;
 			color: white;
 			font-size: 18px;
+		}
+		.boton {
+			transition-duration: 0.6s;
+			background-color: #496EB4;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border-radius: 4px;
+			cursor: pointer;
+			border: 3px solid #dedede;
+		}
+		.boton:hover {
+			color: black;
+			background-color: white;
 		}
 	</style>
 	
@@ -70,6 +84,7 @@ class Hce extends PolymerElement {
 					<texto-hce prop1="Notas" id="notas"></texto-hce>
 			</div>
 			</iron-pages>
+			<button on-click="enviaHce" class="boton">Eviar</button>
 		</div>
     `;
   }
@@ -91,6 +106,9 @@ class Hce extends PolymerElement {
     var texto = this.$.consulta.greetMe();
     console.log(texto);
     this.$.consulta.setMe("Su puta madre");
+  }
+
+  enviaHce() {//por codificar
   }
 
 }

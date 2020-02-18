@@ -98,9 +98,9 @@ class MdcV2App extends PolymerElement {
           </app-header>
 
           <iron-pages selected="[[page]]" attr-for-selected="name" role="main">
-            <hce-mdc name="hce"></hce-mdc>
+            <hce-mdc name="hce" id = "hce"></hce-mdc>
             <paciente-mdc name="paciente"></paciente-mdc>
-            <doctor-mdc name="doctor"></doctor-mdc>
+            <doctor-mdc name="doctor" ></doctor-mdc>
           </iron-pages>
         </app-header-layout>
       </app-drawer-layout>
@@ -154,6 +154,10 @@ class MdcV2App extends PolymerElement {
 
   static get observers() {
     return ['_routePageChanged(routeData.page)'];
+  }
+  prueba(msg){
+    console.log("pasa por app ", msg);
+    this.$.hce.prueba(msg);
   }
 
 }

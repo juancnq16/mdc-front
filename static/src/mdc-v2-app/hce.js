@@ -13,7 +13,7 @@ import "../../node_modules/@polymer/paper-tabs/paper-tab.js";
 class Hce extends PolymerElement {
   static get template() {
     return html`
-    <style>
+	<style>
 		.collapse-content {
 			padding: 15px;
 			border: 3px solid #dedede;
@@ -28,9 +28,23 @@ class Hce extends PolymerElement {
 			color: white;
 			font-size: 18px;
 		}
+		.boton {
+			transition-duration: 0.6s;
+			background-color: #496EB4;
+			color: white;
+			padding: 14px 20px;
+			margin: 8px 0;
+			border-radius: 4px;
+			cursor: pointer;
+			border: 3px solid #dedede;
+		}
+		.boton:hover {
+			color: black;
+			background-color: white;
+		}
 	</style>
 	
-	<paciente-hce></paciente-hce>
+	<paciente-hce id = "paciente"></paciente-hce>
     
 		<div class = "division" id="hce-content">
 		<h1>HCE</h1>
@@ -58,7 +72,7 @@ class Hce extends PolymerElement {
 					<texto-hce prop1="Paraclinicos" id="paraclinicos"></texto-hce>
 			</div>
 			<div>
-					<enfermedad-hce></enfermedad-hce>
+					<enfermedad-hce id = "diagnostico"></enfermedad-hce>
 			</div>
 			<div>
 					<texto-hce prop1="Analisis - Plan" id="plan"></texto-hce>
@@ -70,7 +84,17 @@ class Hce extends PolymerElement {
 					<texto-hce prop1="Notas" id="notas"></texto-hce>
 			</div>
 			</iron-pages>
+			<button on-click="enviaHce" class="boton">Eviar</button>
 		</div>
+		<iron-ajax
+			  id="enviaHce"
+			  url="http://127.0.0.1:5000/enviaHce"
+				method="POST"
+			  handle-as="json"
+			  on-response="responde"
+			  on-error="falla"
+			  >
+		</iron-ajax>
     `;
   }
 
@@ -93,6 +117,63 @@ class Hce extends PolymerElement {
     this.$.consulta.setMe("Su puta madre");
   }
 
+  enviaHce() {//por codificar
+	console.log("ensamblando historia");
+	var motivoConsulta = this.$.consulta.greetMe();
+	var antecedentes = this.$.antecedentes.greetMe();
+	var examenFisico = this.$.examen.greetMe();
+	var paraclinicos = this.$.paraclinicos.greetMe();
+	var diagnostico = this.$.diagnostico.getDiagnostico();
+	var plan = this.$.plan.greetMe();
+	var control = this.$.control.greetMe();
+	var causaExterna= this.$.diagnostico.getCausa();
+	var finalidadConsulta = this.$.diagnostico.getFin();
+	var tipoDiagnostico = this.$.diagnostico.getTipo();
+	var fecha = this.getFecha();
+	var hora = this.getHora();
+	var leJson = {
+		"motivoConsulta":motivoConsulta,
+		"antecedentes":antecedentes,
+		"examenFisico":examenFisico,
+		"paraclinicos":paraclinicos,
+		"diagnostico":diagnostico,
+		"plan":plan,
+		"control":control,
+		"causaExterna":causaExterna,
+		"finalidadConsulta":finalidadConsulta,
+		"tipoDiagnostico":tipoDiagnostico,
+		"cita_hora":hora,
+		"cita_fecha_de_cita":fecha
+	};
+	var cuerpo = JSON.stringify(leJson);
+	this.$.enviaHce.body=cuerpo;
+	this.$.enviaHce.generateRequest();
+  }
+  getHce(){
+
+  }
+  fillPaciente(paciente){
+	this.$.paciente.fillPaciente(paciente);
+  }
+  prueba(mensaje){
+	  console.log("its working...",mensaje )
+  }
+	getFecha(){
+		var fecha = new Date();
+		var f = fecha.getFullYear() +"-"+fecha.getMonth()+"-"+fecha.getDay();
+		return f;
+	}
+	getHora(){
+		var fecha = new Date();
+		var h = fecha.getHours()+":"+fecha.getMinutes()+":"+fecha.getSeconds();
+		return h;
+	}
+	responde(e, data){
+		alert("Historia guardada con exito!");
+	}
+	falla(e, data){
+		alert("Hubo un error al guardar la historia");
+	}
 }
 
 window.customElements.define('hce-mdc', Hce);

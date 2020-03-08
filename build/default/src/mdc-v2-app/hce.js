@@ -72,7 +72,7 @@ class Hce extends PolymerElement {
 					<texto-hce prop1="Paraclinicos" id="paraclinicos"></texto-hce>
 			</div>
 			<div>
-					<enfermedad-hce></enfermedad-hce>
+					<enfermedad-hce id = "enf"></enfermedad-hce>
 			</div>
 			<div>
 					<texto-hce prop1="Analisis - Plan" id="plan"></texto-hce>
@@ -84,7 +84,7 @@ class Hce extends PolymerElement {
 					<texto-hce prop1="Notas" id="notas"></texto-hce>
 			</div>
 			</iron-pages>
-			<button on-click="enviaHce" class="boton">Eviar</button>
+			<button on-click="prueba" class="boton">Eviar</button>
 		</div>
     `;
   }
@@ -109,6 +109,18 @@ class Hce extends PolymerElement {
   }
 
   enviaHce() {//por codificar
+  }
+
+  getFecha() {
+    var fecha = new Date();
+    var f = fecha.getFullYear() + "-" + fecha.getMonth() + "-" + fecha.getDay();
+    return f;
+  }
+
+  getHora() {
+    var fecha = new Date();
+    var h = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+    return h;
   }
 
 }

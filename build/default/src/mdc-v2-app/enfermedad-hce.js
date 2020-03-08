@@ -1,6 +1,6 @@
 import { html, PolymerElement } from "../../node_modules/@polymer/polymer/polymer-element.js";
-import "../../node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js";
-import "../../node_modules/@polymer/paper-item/paper-item.js";
+import "../../node_modules/@polymer/paper-dropdown-menu/paper-dropdown-menu.js"; //import '@polymer/option/option.js';
+
 import "../../node_modules/@polymer/paper-listbox/paper-listbox.js";
 import "../../node_modules/@polymer/paper-card/paper-card.js";
 import "../../node_modules/@polymer/iron-autogrow-textarea/iron-autogrow-textarea.js";
@@ -73,48 +73,61 @@ class EnfermedadHce extends PolymerElement {
 			}
 		</style>
 		<paper-card>
-			<paper-dropdown-menu class="custom" label="Causa externa">
-				<paper-listbox slot="dropdown-content" selected="0">
-					<paper-item>01 = Accidente de trabajo</paper-item>
-					<paper-item>02 = Accidente de tránsito</paper-item>
-					<paper-item>03 = Accidente rábico</paper-item>
-					<paper-item>04 = Accidente ofídico</paper-item>
-					<paper-item>05 = Otro tipo de accidente</paper-item>
-					<paper-item>06 = Evento catastrófico</paper-item>
-					<paper-item>07 = Lesión por agresión</paper-item>
-					<paper-item>08 = Lesión auto inflingida</paper-item>
-					<paper-item>09 = Sospecha de maltrato físico</paper-item>
-					<paper-item>10 = Sospecha de abuso sexual</paper-item>
-					<paper-item>11 = Sospecha de violencia sexual</paper-item>
-					<paper-item>12 = Sospecha de maltrato emocional</paper-item>
-					<paper-item>13 = Enfermedad general</paper-item>
-					<paper-item>14 = Enfermedad profesional</paper-item>
-					<paper-item>15 = Otra</paper-item>
-				</paper-listbox>
-			</paper-dropdown-menu>
+			<label> Causa Externa </label>
 			<br>
-			<paper-dropdown-menu class="custom" label="Finalidad Consulta">
-				<paper-listbox slot="dropdown-content" selected="0">
-					<paper-item>01 = Atención del parto (puerperio)</paper-item>
-					<paper-item>02 = Atención del recién nacido</paper-item>
-					<paper-item>03 = Atención en planificación familiar</paper-item>
-					<paper-item>04 = Derección de alteraciones de crecimiento y desarrollo del menor de diez años</paper-item>
-					<paper-item>05 = Detección de alteración del desarrollo del joven</paper-item>
-					<paper-item>06 = Detección de alteraciones del embarazo</paper-item>
-					<paper-item>07 = Detección de alteraciones del adulto</paper-item>
-					<paper-item>08 = Detección de alteraciones de agudeza visual</paper-item>
-					<paper-item>09 = Sospecha de maltrato físico</paper-item>
-					<paper-item>10 = Detección de enfermedad profesional</paper-item>
-					<paper-item>11 = No aplica</paper-item>
-				</paper-listbox>
-			</paper-dropdown-menu>
+				<select id = "causa">
+					<option value ="01 = Accidente de trabajo">01 = Accidente de trabajo</option>
+					<option value ="02 = Accidente de tránsito">02 = Accidente de tránsito</option>
+					<option value ="03 = Accidente rábico">03 = Accidente rábico</option>
+					<option value ="04 = Accidente ofídico">04 = Accidente ofídico</option>
+					<option value ="05 = Otro tipo de accidente">05 = Otro tipo de accidente</option>
+					<option value ="06 = Evento catastrófico">06 = Evento catastrófico</option>
+					<option value ="07 = Lesión por agresión">07 = Lesión por agresión</option>
+					<option value ="08 = Lesión auto inflingida">08 = Lesión auto inflingida</option>
+					<option value ="09 = Sospecha de maltrato físico">09 = Sospecha de maltrato físico</option>
+					<option value ="10 = Sospecha de abuso sexual">10 = Sospecha de abuso sexual</option>
+					<option value ="11 = Sospecha de violencia sexual">11 = Sospecha de violencia sexual</option>
+					<option value ="12 = Sospecha de maltrato emocional">12 = Sospecha de maltrato emocional</option>
+					<option value ="13 = Enfermedad general">13 = Enfermedad general</option>
+					<option value ="14 = Enfermedad profesional">14 = Enfermedad profesional</option>
+					<option value ="15 = Otra">15 = Otra</option>
+				</select>
 			<br>
-			<paper-dropdown-menu class="custom" label="Finalidad Consulta">
-				<paper-listbox slot="dropdown-content" selected="0">
-					<paper-item>01 = Impresión Diagnostica</paper-item>
-					<paper-item>02 = Confirmado nuevo</paper-item>
-					<paper-item>03 = Confirmado repetido</paper-item>
-				</paper-listbox>
+			<label>Finalidad Consulta</label>
+			<br>
+				<select id = "fin">
+					<option value = "01 = Atención del parto (puerperio)">
+						01 = Atención del parto (puerperio)</option>
+					<option value = "02 = Atención del recién nacido">02 = Atención del recién nacido</option>
+					<option value = "03 = Atención en planificación familiar">
+						03 = Atención en planificación familiar</option>
+					<option value = "04 = Derección de alteraciones de crecimiento y desarrollo del menor de diez años">
+						04 = Derección de alteraciones de crecimiento y desarrollo del menor de diez años</option>
+					<option value = "05 = Detección de alteración del desarrollo del joven">
+						05 = Detección de alteración del desarrollo del joven</option>
+					<option value = "06 = Detección de alteraciones del embarazo">
+						06 = Detección de alteraciones del embarazo</option>
+					<option value = "07 = Detección de alteraciones del adulto">
+						07 = Detección de alteraciones del adulto</option>
+					<option value = "08 = Detección de alteraciones de agudeza visual">
+						08 = Detección de alteraciones de agudeza visual</option>
+					<option value = "09 = Sospecha de maltrato físico">
+						09 = Sospecha de maltrato físico</option>
+					<option value = "10 = Detección de enfermedad profesional">
+						10 = Detección de enfermedad profesional</option>
+					<option value = "11 = No aplica">11 = No aplica</option>
+				</select>
+			<br>
+			<label>pendiente</label>
+			<br>
+				<select id ="">
+					<option value = "01 = Impresión Diagnostica">
+						01 = Impresión Diagnostica</option>
+					<option value = "02 = Confirmado nuevo">
+						02 = Confirmado nuevo</option>
+					<option value = "03 = Confirmado repetido">
+						03 = Confirmado repetido</option>
+				</select>
 			</paper-dropdown-menu>
 			<div class="card-content" style = "font-size: 12px;">	
 				  <iron-autogrow-textarea rows="6" max-rows="4" placeholder="[[prop1]]" id="texto"></iron-autogrow-textarea>
@@ -204,6 +217,12 @@ class EnfermedadHce extends PolymerElement {
   ready() {
     super.ready();
     console.log('my-element is ready!');
+  }
+
+  prueba() {
+    var a = this.$.causa.value;
+    this.$.fin.value = "03 = Atención en planificación familiar";
+    return a;
   }
 
 }

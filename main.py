@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, Response, make_response, jsonify
 from flask_mysqldb import MySQL
 import json
-import auxiliarPaciente
+import auxiliarPaciente, auxiliarHce
 
 app = Flask(__name__)
 
@@ -12,6 +12,7 @@ app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_DB'] = 'clinica'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
+
 mysql = MySQL(app)
 
 @app.route('/consultaEnfermedad2', methods = ['POST'])
@@ -21,7 +22,7 @@ def consultaEnfermedad2():
     seleccion = datos[1]
     cur = mysql.connection.cursor()
     if seleccion=='codigo':
-        print("salió por codigo")
+        #print("salió por codigo")
         sentencia = "select clave, diagnostico from enfermedad where clave like '%?%';"
         sentencia = sentencia.replace("?",consulta)
     else:
@@ -123,6 +124,7 @@ def pruebaEps():
     return "melo"
 @app.route('/consultaPaciente', methods=['POST'])
 def consultaPaciente():
+
     cur = mysql.connection.cursor()
     datos = str(request.get_data())[2:][:-1]
     print("datos: ",request.get_data())
@@ -137,5 +139,12 @@ def consultaPaciente():
     envio = json.dumps(resultados)
     print(envio)
     return envio
+@app.route('/enviaHce', methods = ['POST'])
+def enviaHce():
+    cur = mysql.connection.cursor()
+    datos = str(request.get_data())[2:][:-1]
+    datos = json.loads(str(request.get_data())[2:][:-1])
+    print(datos)
+    auxiliarHce.insertaHce(cur, datos)
 if __name__ == '__main__':
     app.run(debug=True)

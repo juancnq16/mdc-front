@@ -1,0 +1,1 @@
+-sudo npm install -g polymer-cli --unsafe-perm

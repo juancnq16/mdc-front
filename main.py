@@ -9,7 +9,7 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = '3166238032'
 app.config['MYSQL_HOST'] = 'localhost'
 #app.config['MYSQL_PORT'] = 'ALGUNPUERTO'
-app.config['MYSQL_DB'] = 'clinica'
+app.config['MYSQL_DB'] = 'newschema'
 app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 

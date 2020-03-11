@@ -123,8 +123,9 @@ class Hce extends PolymerElement {
   enviaHce() {//por codificar
 	var envio = this.gatherData();
 	envio = JSON.stringify(envio);
-	this.$.enviaHce.body = envio;
-	this.$.enviaHce.generateRequest();
+	console.log();
+	//this.$.enviaHce.body = envio;
+	//this.$.enviaHce.generateRequest();
   }
   confirmaHce(){
 	alert("Historia guardada con exito");
@@ -135,17 +136,13 @@ class Hce extends PolymerElement {
 
   getFecha() {
     var fecha = new Date();
-    var f = fecha.getFullYear() + "-" + fecha.getMonth() + "-" + fecha.getDay();
-    return f;
-  }
-
-  getHora() {
-    var fecha = new Date();
-    var h = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
-    return h;
+	var f = fecha.getFullYear() + "-" + parseInt(fecha.getMonth())+1 + "-" + fecha.getDate();
+	var h = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
+    return [f,h];
   }
   gatherData(){
-	  var selections = this.diagnostico.getSelections();
+	  var selections = this.$.diagnostico.getSelections();
+	  var time = this.getFecha();
 	  var data = {
 		  "motivo":this.$.consulta.greetMe(),
 		  "antecedentes":this.$.antecedentes.greetMe(),
@@ -157,6 +154,8 @@ class Hce extends PolymerElement {
 			"causa":selections['causa'],
 			"tipo":selections['tipo'],
 			"fin":selections['fin'],
+			"fecha":time[0],
+			"hora":time[1]
 	  };
 	  console.log(data);
   }

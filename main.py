@@ -77,14 +77,7 @@ def insertaPaciente():
     return "all good"
 @app.route('/test', methods=['POST','GET'])
 def prueba():
-    datos = str(request.get_data())[2:][:-1]
-    datos= datos.replace("\\n", "")
-    datos = datos.replace("\\t", "")
-    datos_json = json.loads(datos)
-    datos_json["idpaciente"]=index
-    print(datos_json)
-    print(datos_json["id"])
-    return "holi"
+    pass 
 @app.route('/consultaEps', methods=['POST'])
 def consultaEps():
     cur = mysql.connection.cursor()

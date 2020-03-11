@@ -84,7 +84,16 @@ class Hce extends PolymerElement {
 					<texto-hce prop1="Notas" id="notas"></texto-hce>
 			</div>
 			</iron-pages>
-			<button on-click="prueba" class="boton">Eviar</button>
+			<button on-click="enviaHce" class="boton">Eviar</button>
+			<iron-ajax
+			  id="enviaHce"
+			  url="http://127.0.0.1:5000/enviaHce"
+				method="POST"
+			  handle-as="json"
+			  on-response="confirmaHce"
+			  on-error"fallaHce"
+			  >
+		  </iron-ajax>
 		</div>
     `;
   }
@@ -98,18 +107,30 @@ class Hce extends PolymerElement {
       selected: {
         type: Number,
         value: 0
-      }
+	  },
+	  loaded:{
+		  type : Boolean,
+		  value : false
+	  }
     };
   }
 
   saluda() {
     var texto = this.$.consulta.greetMe();
     console.log(texto);
-    this.$.consulta.setMe("Su puta madre");
   }
 
   enviaHce() {//por codificar
 	var envio = this.gatherData();
+	envio = JSON.stringify(envio);
+	this.$.enviaHce.body = envio;
+	this.$.enviaHce.generateRequest();
+  }
+  confirmaHce(){
+	alert("Historia guardada con exito");
+  }
+  fallaHce(){
+	alert("Error al guardar la historia");
   }
 
   getFecha() {
@@ -124,13 +145,20 @@ class Hce extends PolymerElement {
     return h;
   }
   gatherData(){
+	  var selections = this.diagnostico.getSelections();
 	  var data = {
 		  "motivo":this.$.consulta.greetMe(),
 		  "antecedentes":this.$.antecedentes.greetMe(),
 			"examen" : this.$.examen.greetMe(),
 			"paraclinicos":this.$.paraclinicos.greetMe(),
-			"diagnostico":this.$.diagnostico.
-	  }
+			"diagnostico":this.$.diagnostico.greetMe(),
+			"plan":this.$.plan.greetMe(),
+			"control":this.$.control.greetMe(),
+			"causa":selections['causa'],
+			"tipo":selections['tipo'],
+			"fin":selections['fin'],
+	  };
+	  console.log(data);
   }
 }
 

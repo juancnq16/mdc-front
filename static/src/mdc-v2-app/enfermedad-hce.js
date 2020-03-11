@@ -118,9 +118,9 @@ class EnfermedadHce extends PolymerElement {
 					<option value = "11 = No aplica">11 = No aplica</option>
 				</select>
 			<br>
-			<label>pendiente</label>
+			<label>Tipo de diagnostico</label>
 			<br>
-				<select id ="">
+				<select id ="tipo" on-click="prueba">
 					<option value = "01 = Impresión Diagnostica">
 						01 = Impresión Diagnostica</option>
 					<option value = "02 = Confirmado nuevo">
@@ -218,11 +218,21 @@ class EnfermedadHce extends PolymerElement {
     super.ready();
     console.log('my-element is ready!');
   }
+  greetMe() {
+    return this.$.texto.value;
+  }
 
-  prueba() {
-    var a = this.$.causa.value;
-    this.$.fin.value = "03 = Atención en planificación familiar";
-    return a;
+
+  getSelections() {
+	var causa = this.$.causa.value;
+	var tipo = this.$.tipo.value;
+	var fin = this.$.fin.value;
+	//this.$.fin.value = "03 = Atención en planificación familiar";
+    return {
+		'causa':causa,
+		'tipo':tipo,
+		'fin':fin
+	};
   }
 
 }

@@ -34,6 +34,22 @@ class PacienteHce extends PolymerElement {
 			}
 		</style>
 		<h2 style = "text-align: center;">Datos del paciente</h2>
+		<button class="boton" style="width: 50%;
+			  font-size: 14px" on-click="buscar">Buscar
+		</button>
+		<iron-collapse id="collapse" opened="{{opened}}">
+			  <div class="buscando">
+				  <label >Numero de documento del paciente : </label> <br>
+				  <input type="text" id="documento" 
+					  class="miniBusqueda" 
+					  style="width: 50%; margin-right: 15px;">
+				  </input>
+				  <button on-click="consultaPaciente" 
+					  class="boton" 
+					  style="width: 30%; font-size: 14px;">Consultar
+				  </button>
+			  </div>
+		  </iron-collapse>
 		<paper-card>
 			<div class="contenido">
 				<table>
@@ -108,6 +124,15 @@ class PacienteHce extends PolymerElement {
 				</table>
 			</div>
 		</paper-card>
+		<iron-ajax
+			  id="consultaPaciente"
+			  url="http://127.0.0.1:5000/consultaPaciente"
+				method="POST"
+			  handle-as="json"
+			  on-response="getPaciente"
+			  on-error="error"
+			  >
+		  </iron-ajax>
     `;
   }
 
@@ -154,8 +179,50 @@ class PacienteHce extends PolymerElement {
       },
       usuario_tipo: {
         type: String
+	  },
+	  opened: {
+        type: Boolean,
+        reflectToAttribute: true
       }
     };
+  }
+  getPaciente(evento, solicitud) {
+    var datos = solicitud.response;
+    this.nombre = datos['nombre'] + datos['apellido'] ;
+    this.documento_tipo = datos['tipoDocumento'];
+    this.lugarNacimiento = datos['lugarNacimiento'];
+    this.usuario_tipo = datos['tipoUsuario'];
+    this.sexo = datos['sexo'];
+    this.documento_numero = datos['numeroDoc'];
+    this.fechaNacimiento = datos['nacimiento'];
+    //this.$.rh.value = datos['RH'];
+    this.telefono = datos['telefono'];
+    //this.$.correo.value = datos['email'];
+    //this.$.estado_civil.value = datos['estadoCivil'];
+    //this.$.zona_residencia.value = datos['zona_residencia'];
+    this.cuidad= datos['ciudad'];
+    this.direccion = datos['dirección'];
+    this.$.eps.setValue(datos['entidadSeguridad']);
+    this.$.plan_beneficios.value = datos['plan_beneficios'];
+    this.$.tipo_sangre.value = datos['grupoSanguineo'];
+    var prueba = document.getElementById("mdc");
+    console.log(prueba);
+  }
+  error(){
+	  alert("No existe un paciente bajo ese criterio")
+  }
+  buscar() {
+    this.$.collapse.toggle();
+  }
+  consultaPaciente() {
+    var doc = this.$.documento.value;
+    var envio = {
+      'numeroDoc': doc
+    };
+    var cuerpo = JSON.stringify(envio);
+    this.consultaPaciente.body = cuerpo;
+    console.log(cuerpo);
+    this.consultaPaciente.generateRequest();
   }
 
 }

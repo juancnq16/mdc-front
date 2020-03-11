@@ -202,7 +202,7 @@ class PacienteHce extends PolymerElement {
     //this.$.zona_residencia.value = datos['zona_residencia'];
     this.cuidad= datos['ciudad'];
     this.direccion = datos['dirección'];
-    this.$.eps.setValue(datos['entidadSeguridad']);
+    this.entidad = datos['entidadSeguridad'];
     this.$.plan_beneficios.value = datos['plan_beneficios'];
     this.$.tipo_sangre.value = datos['grupoSanguineo'];
     var prueba = document.getElementById("mdc");

@@ -207,6 +207,7 @@ class Paciente extends PolymerElement {
 			  url="http://127.0.0.1:5000/consultaPaciente"
 				method="POST"
 			  handle-as="json"
+			  on-response = "getPaciente"
 			  >
 		  </iron-ajax>
 	  `;
@@ -240,9 +241,9 @@ class Paciente extends PolymerElement {
       'numeroDoc': doc
     };
     var cuerpo = JSON.stringify(envio);
-    this.consultaPaciente.body = cuerpo;
+    this.$.consultaPaciente.body = cuerpo;
     console.log(cuerpo);
-    this.consultaPaciente.generateRequest();
+    this.$.consultaPaciente.generateRequest();
   }
 
   addEps() {

@@ -221,7 +221,9 @@ class EnfermedadHce extends PolymerElement {
   greetMe() {
     return this.$.texto.value;
   }
-
+  setMe(dato){
+	  this.$.texto.value = dato;
+  }
 
   getSelections() {
 	var causa = this.$.causa.value;

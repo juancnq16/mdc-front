@@ -32,6 +32,34 @@ class PacienteHce extends PolymerElement {
 				background-color: #f2f2f2;
 				padding: 10px 30px;
 			}
+			.buscando {
+				display: inline-block;
+				width: 50%;
+				background-color: #cccccc;
+				border: 2px solid;
+				border-color: #496EB4;
+				border-radius: 8px;
+				margin-bottom: 20px;
+				padding: 8px 0px 5px 5px;
+			}
+			.boton {
+				width: 60% ;
+				font-size: 22px;
+				transition-duration: 0.6s;
+				background-color: #496EB4;
+				color: white;
+				padding: 12px 20px;
+				margin: 8px 0;
+				border-radius: 4px;
+				cursor: pointer;
+				border: 3px solid #dedede;
+				display: inline-block;
+				text-align: center;
+			}
+			.boton:hover {
+				color: black;
+				background-color: white;
+			}
 		</style>
 		<h2 style = "text-align: center;">Datos del paciente</h2>
 		<button class="boton" style="width: 50%;
@@ -45,6 +73,10 @@ class PacienteHce extends PolymerElement {
 					  style="width: 50%; margin-right: 15px;">
 				  </input>
 				  <button on-click="consultaPaciente" 
+					  class="boton" 
+					  style="width: 30%; font-size: 14px;">Atender
+				  </button>
+				  <button on-click="consultaHce" 
 					  class="boton" 
 					  style="width: 30%; font-size: 14px;">Consultar
 				  </button>
@@ -133,6 +165,15 @@ class PacienteHce extends PolymerElement {
 			  on-error="error"
 			  >
 		  </iron-ajax>
+		  <iron-ajax
+			  id="consultaHce"
+			  url="http://127.0.0.1:5000/consultaHce"
+				method="POST"
+			  handle-as="json"
+			  on-response="getHce"
+			  on-error="notFoundHce"
+			  >
+		  </iron-ajax>
     `;
   }
 
@@ -166,7 +207,8 @@ class PacienteHce extends PolymerElement {
         type: String
       },
       edad: {
-        type: String
+		type: Number,
+		computed:'calcularEdad(fechaNacimiento)'
       },
       ciudad: {
         type: String
@@ -177,7 +219,7 @@ class PacienteHce extends PolymerElement {
       entidad: {
         type: String
       },
-      usuario_tipo: {
+      tipo_usuario: {
         type: String
 	  },
 	  opened: {
@@ -186,27 +228,31 @@ class PacienteHce extends PolymerElement {
       }
     };
   }
+  getHce(evento, solicitud){
+		var ans = solicitud.response;
+		console.log(ans);
+		var prueba = document.getElementById("mdc");
+		console.log(prueba);
+		prueba.atendCita(ans);
+  }
   getPaciente(evento, solicitud) {
-    var datos = solicitud.response;
-    this.nombre = datos['nombre'] + datos['apellido'] ;
+	var datos = solicitud.response;
+    this.nombre = datos['nombre'] +" "+ datos['apellido'] ;
     this.documento_tipo = datos['tipoDocumento'];
     this.lugarNacimiento = datos['lugarNacimiento'];
-    this.usuario_tipo = datos['tipoUsuario'];
+    this.tipo_usuario = datos['tipoUsuario'];
     this.sexo = datos['sexo'];
     this.documento_numero = datos['numeroDoc'];
-    this.fechaNacimiento = datos['nacimiento'];
-    //this.$.rh.value = datos['RH'];
+	this.fechaNacimiento = datos['nacimiento'];
     this.telefono = datos['telefono'];
-    //this.$.correo.value = datos['email'];
-    //this.$.estado_civil.value = datos['estadoCivil'];
-    //this.$.zona_residencia.value = datos['zona_residencia'];
-    this.cuidad= datos['ciudad'];
-    this.direccion = datos['dirección'];
+    this.ciudad= datos['ciudad'];
+    this.direccion = datos['direccion']; 
     this.entidad = datos['entidadSeguridad'];
-    this.$.plan_beneficios.value = datos['plan_beneficios'];
-    this.$.tipo_sangre.value = datos['grupoSanguineo'];
-    var prueba = document.getElementById("mdc");
-    console.log(prueba);
+    //var prueba = document.getElementById("mdc");
+    //console.log(prueba);
+  }
+  notFoundHce(){
+	  alert("no existe una historia asociada a ese paciente")
   }
   error(){
 	  alert("No existe un paciente bajo ese criterio")
@@ -214,17 +260,36 @@ class PacienteHce extends PolymerElement {
   buscar() {
     this.$.collapse.toggle();
   }
+  consultaHce(){
+	var doc = this.$.documento.value;
+    var envio = {
+      'numeroDoc': doc
+	};
+	var cuerpo = JSON.stringify(envio);
+	this.consultaPaciente();
+	console.log("el ajax", this.$.consultaHce);
+	this.$.consultaHce.body = cuerpo;
+	this.$.consultaHce.generateRequest();
+  }
   consultaPaciente() {
     var doc = this.$.documento.value;
     var envio = {
       'numeroDoc': doc
-    };
+	};
+	this.documento_numero=doc;
     var cuerpo = JSON.stringify(envio);
-    this.consultaPaciente.body = cuerpo;
-    console.log(cuerpo);
-    this.consultaPaciente.generateRequest();
+    this.$.consultaPaciente.body = cuerpo;
+    this.$.consultaPaciente.generateRequest();
   }
-
+  calcularEdad(fechaNacimiento){
+	var fecha = new Date();
+	fechaNacimiento = fechaNacimiento.split("-")[0];
+	var f = fecha.getFullYear();
+	return parseInt(f)-parseInt(fechaNacimiento);
+  }
+  getDocumento(){
+	  return this.documento_numero;
+  }
 }
 
 window.customElements.define('paciente-hce', PacienteHce);

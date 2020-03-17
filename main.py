@@ -14,6 +14,7 @@ app.config['MYSQL_CURSORCLASS'] = 'DictCursor'
 
 
 mysql = MySQL(app)
+indexPaciente = ""
 
 @app.route('/consultaEnfermedad2', methods = ['POST'])
 def consultaEnfermedad2():
@@ -57,10 +58,10 @@ def paises():
     return respuesta
 @app.route('/insertaPaciente', methods=['POST','GET'])
 def insertaPaciente():
+    
     cur = mysql.connection.cursor()
     index = auxiliarPaciente.getIndex(cur)
     cur.execute("select * from entidad")
-    
     datos = str(request.get_data())[2:][:-1]
     datos= datos.replace("\\n", "")
     datos = datos.replace("\\t", "")
@@ -132,12 +133,43 @@ def consultaPaciente():
     envio = json.dumps(resultados)
     print(envio)
     return envio
+
+@app.route('/consultaHce', methods = ['POST'])
+def consultaHce():
+    print("::::LLEGAMOS::::")
+    cur = mysql.connection.cursor()
+    datos = request.get_data().decode("utf8")
+    datos = json.loads(datos)
+    indexPaciente = auxiliarHce.indexPaciente(cur,str(datos["numeroDoc"]))
+    respuesta = auxiliarHce.consultaHce(cur, indexPaciente)
+    respuesta = json.dumps(respuesta)
+    print(respuesta)
+    return respuesta
+
 @app.route('/enviaHce', methods = ['POST'])
 def enviaHce():
     cur = mysql.connection.cursor()
-    datos = str(request.get_data())[2:][:-1]
-    datos = json.loads(str(request.get_data())[2:][:-1])
-    print(datos)
-    auxiliarHce.insertaHce(cur, datos)
+    datos = request.get_data().decode("utf8")
+    datos = json.loads(datos)
+    indexHce = auxiliarHce.indexHce(cur)
+    indexPaciente = auxiliarHce.indexPaciente(cur,str(datos["numeroDoc"]))
+    datos['idPaciente']=indexPaciente
+    datos['index']= indexHce
+    sentencia = auxiliarHce.insertaHce(datos)
+    cur.execute(sentencia)
+    mysql.connection.commit()
+    return "cool"
+@app.route('/creaCita', methods = ['POST'])
+def creaCita():
+    cur = mysql.connection.cursor()
+    datos = request.get_data().decode("utf8")
+    datos = json.loads(datos)
+    indexPaciente = auxiliarHce.indexPaciente(cur,str(datos["numeroDoc"]))
+    datos['idPaciente']=indexPaciente
+    sentencia = auxiliarHce.creaCita(datos)
+    cur.execute(sentencia)
+    mysql.connection.commit()
+    print("--------cita creada-----------")
+    return "melo"
 if __name__ == '__main__':
     app.run(debug=True)

@@ -44,7 +44,7 @@ class Hce extends PolymerElement {
 		}
 	</style>
 	
-	<paciente-hce></paciente-hce>
+	<paciente-hce id = "paciente"></paciente-hce>
     
 		<div class = "division" id="hce-content">
 		<h1>HCE</h1>
@@ -93,6 +93,12 @@ class Hce extends PolymerElement {
 			  on-response="confirmaHce"
 			  on-error"fallaHce"
 			  >
+			  <iron-ajax
+			  id="creaCita"
+			  url="http://127.0.0.1:5000/creaCita"
+				method="POST"
+			  handle-as="json"
+			  >
 		  </iron-ajax>
 		</div>
     `;
@@ -122,10 +128,26 @@ class Hce extends PolymerElement {
 
   enviaHce() {//por codificar
 	var envio = this.gatherData();
+	var cita = this.makecita(envio);
 	envio = JSON.stringify(envio);
-	console.log();
-	//this.$.enviaHce.body = envio;
-	//this.$.enviaHce.generateRequest();
+	cita = JSON.stringify(cita);
+	this.$.creaCita.body = cita;
+	console.log(cita);
+	this.$.enviaHce.body = envio;
+	this.$.creaCita.generateRequest();
+	this.$.enviaHce.generateRequest();
+  }
+  fillHce(datos){
+	  console.log("datinhos::::", datos);
+	this.$.consulta.setMe(datos['motivoConsulta']);
+	this.$.antecedentes.setMe(datos['antecedentes']);
+	this.$.examen.setMe(datos['examenFisico']);
+	this.$.paraclinicos.setMe(datos['paraclinicos']);
+	this.$.diagnostico.setMe(datos['diagnostico']);
+	this.$.plan.setMe(datos['diagnostico']);
+	this.$.plan.setMe(datos['plan']);
+	var selections = [datos['causaExterna'], datos['tipoDiagnostico'],datos['finalidadConsulta']]
+	this.$.diagnostico.setSelections(selections);
   }
   confirmaHce(){
 	alert("Historia guardada con exito");
@@ -135,8 +157,9 @@ class Hce extends PolymerElement {
   }
 
   getFecha() {
-    var fecha = new Date();
-	var f = fecha.getFullYear() + "-" + parseInt(fecha.getMonth())+1 + "-" + fecha.getDate();
+	var fecha = new Date();
+	var mes = parseInt(fecha.getMonth())+1;
+	var f = fecha.getFullYear() + "-" + mes + "-" + fecha.getDate();
 	var h = fecha.getHours() + ":" + fecha.getMinutes() + ":" + fecha.getSeconds();
     return [f,h];
   }
@@ -144,6 +167,7 @@ class Hce extends PolymerElement {
 	  var selections = this.$.diagnostico.getSelections();
 	  var time = this.getFecha();
 	  var data = {
+		  "numeroDoc":this.$.paciente.getDocumento(),
 		  "motivo":this.$.consulta.greetMe(),
 		  "antecedentes":this.$.antecedentes.greetMe(),
 			"examen" : this.$.examen.greetMe(),
@@ -157,7 +181,17 @@ class Hce extends PolymerElement {
 			"fecha":time[0],
 			"hora":time[1]
 	  };
-	  console.log(data);
+	  return data;
+  }
+  makecita(paquete){
+	  console.log("le paquete", paquete)
+	var data = {
+		"numeroDoc":paquete['numeroDoc'],
+		"fecha":paquete['fecha'],
+		"hora":paquete['hora'],
+	};
+	console.log("pasa por makecita", data);
+	return data
   }
 }
 

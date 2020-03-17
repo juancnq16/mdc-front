@@ -234,6 +234,11 @@ class EnfermedadHce extends PolymerElement {
 		'fin':fin
 	};
   }
+  setSelections(selections){
+	this.$.causa.value = selections[0];
+	this.$.tipo.value = selections[1];
+	this.$.fin.value = selections[2];
+  }
 
 }
 

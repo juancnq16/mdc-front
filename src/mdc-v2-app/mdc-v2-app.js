@@ -109,7 +109,7 @@ class MdcV2App extends PolymerElement {
     return {
       prop1: {
         type: String,
-        value: 'MedicalCloud'
+        value: 'App'
       },
       page: {
         type: String,
